@@ -9,6 +9,7 @@ public class Musico {
 
     private String nome;
     private List<String> participantes;
+    private String banner;
     private List<String> fotos;
     private List<String> musicas;
     private List<String> videos;
@@ -16,6 +17,12 @@ public class Musico {
     public Musico (String nome, List<String> participantes) {
         this.nome = nome;
         this.participantes = participantes;
+    }
+
+    public Musico (String nome, List<String> participantes, String banner) {
+        this.nome = nome;
+        this.participantes = participantes;
+        this.banner = banner;
     }
 
     public String getNome() {
@@ -36,6 +43,14 @@ public class Musico {
 
     public void addParticipante(String participante) {
         participantes.add(participante);
+    }
+
+    public String getBanner() {
+        return banner;
+    }
+
+    public void setBanner(String banner) {
+        this.banner = banner;
     }
 
     public List<String> getFotos() {

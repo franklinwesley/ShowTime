@@ -2,6 +2,7 @@ package ufcg.com.showtime;
 
 import android.content.Intent;
 import android.speech.RecognizerIntent;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -22,10 +23,15 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ufcg.com.showtime.Adapters.TabsAdapter;
+import ufcg.com.showtime.Extras.SlidingTabLayout;
+
 
 public class MainActivity extends AppCompatActivity {
 
     private MaterialSearchView searchView;
+    private SlidingTabLayout slidingTabLayout;
+    private ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,15 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_search);
         setSupportActionBar(toolbar);
 
+        //tabs
+        viewPager = (ViewPager) findViewById(R.id.vp_tabs);
+        viewPager.setAdapter(new TabsAdapter(getSupportFragmentManager(), this));
+        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.tabs);
+        slidingTabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        slidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.colorAccent));
+        slidingTabLayout.setViewPager(viewPager);
+
+        //search
         searchView = (MaterialSearchView) findViewById(R.id.search_view);
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override

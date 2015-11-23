@@ -10,10 +10,17 @@ public class Event {
     private String nome;
     private String lugar;
     private List<Musico> musicos;
+    private String banner;
 
     public Event (String nome, String lugar) {
         this.nome = nome;
         this.lugar = lugar;
+    }
+
+    public Event (String nome, String lugar, String banner) {
+        this.nome = nome;
+        this.lugar = lugar;
+        this.banner = banner;
     }
 
     public String getNome() {
@@ -38,5 +45,13 @@ public class Event {
 
     public void addMusico (Musico m) {
         musicos.add(m);
+    }
+
+    public String getBanner() {
+        return this.banner;
+    }
+
+    public void addBanner(String banner) {
+        this.banner = banner;
     }
 }
