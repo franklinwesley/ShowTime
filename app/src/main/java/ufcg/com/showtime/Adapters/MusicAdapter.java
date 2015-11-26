@@ -15,26 +15,25 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import ufcg.com.showtime.Helpers.ImageHelper;
 import ufcg.com.showtime.Interfaces.RecycleViewOnCLickListenerHack;
 import ufcg.com.showtime.Models.Event;
+import ufcg.com.showtime.Models.Musico;
 import ufcg.com.showtime.R;
 
 /**
  * Created by franklin on 21/11/15.
  */
-public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHolder>  {
+public class MusicAdapter extends RecyclerView.Adapter<MusicAdapter.MusicViewHolder>  {
     private Context context;
-    private List<Event> events;
+    private List<Musico> musics;
     private LayoutInflater layoutInflater;
     private RecycleViewOnCLickListenerHack recycleViewOnCLickListenerHack;
     private float scale;
     private int width;
     private int heigth;
-
-    public EventAdapter(Context context, List<Event> events) {
+    public MusicAdapter(Context context, List<Musico> musics) {
         this.context = context;
-        this.events = events;
+        this.musics = musics;
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         this.scale = this.context.getResources().getDisplayMetrics().density;
@@ -43,22 +42,22 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
     }
 
     @Override
-    public EventViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MusicViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = layoutInflater.inflate(R.layout.item_list, parent, false);
-        EventViewHolder eventViewHolder = new EventViewHolder(view);
+        MusicViewHolder musicViewHolder = new MusicViewHolder(view);
 
-        return eventViewHolder;
+        return musicViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(EventViewHolder holder, int position) {
+    public void onBindViewHolder(MusicViewHolder holder, int position) {
 
-        Event event = events.get(position);
-        holder.name.setText(event.getNome());
-        holder.lugar.setText(event.getLugar());
+        Musico music = musics.get(position);
+        holder.name.setText(music.getNome());
+        holder.estilo.setText(music.getEstiloMusical());
 
-        Glide.with(holder.imagePhoto.getContext()).load(event.getBanner()).into(holder.imagePhoto);
+        Glide.with(holder.imagePhoto.getContext()).load(music.getBanner()).into(holder.imagePhoto);
 
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            holder.imagePhoto.setImage(event.getBanner());
@@ -76,29 +75,24 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.EventViewHol
 
     @Override
     public int getItemCount() {
-        return events.size();
+        return musics.size();
     }
 
     public void setRecycleViewOnCLickListenerHack (RecycleViewOnCLickListenerHack r) {
         this.recycleViewOnCLickListenerHack = r;
     }
 
-    public void addListGame(Event event, int position) {
-        events.add(event);
-        notifyItemInserted(position);
-    }
-
-    public class EventViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class MusicViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         TextView name;
-        TextView lugar;
+        TextView estilo;
         ImageView imagePhoto;
 
-        public EventViewHolder(View itemView) {
+        public MusicViewHolder(View itemView) {
             super(itemView);
 
             name = (TextView) itemView.findViewById(R.id.name);
-            lugar = (TextView) itemView.findViewById(R.id.text);
+            estilo = (TextView) itemView.findViewById(R.id.text);
             imagePhoto = (ImageView) itemView.findViewById(R.id.photo);
 
             itemView.setOnClickListener(this);

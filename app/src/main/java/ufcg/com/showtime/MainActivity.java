@@ -1,5 +1,7 @@
 package ufcg.com.showtime;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.speech.RecognizerIntent;
 import android.support.v4.view.ViewPager;
@@ -24,7 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ufcg.com.showtime.Adapters.TabsAdapter;
+import ufcg.com.showtime.Data.MySQLiteContract;
+import ufcg.com.showtime.Data.MySQLiteOpenHelper;
 import ufcg.com.showtime.Extras.SlidingTabLayout;
+import ufcg.com.showtime.Models.Event;
+import ufcg.com.showtime.Models.Musico;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -54,7 +60,17 @@ public class MainActivity extends AppCompatActivity {
         searchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(final String query) {
-                //busca
+                MySQLiteOpenHelper bd = new MySQLiteOpenHelper(getApplication());
+                List<Event> events = bd.searchEvent(query);
+                List<Musico> musics = bd.searchMusic(query);
+
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                SearchFragment latestGamesFragment = SearchFragment.newInstance(events, musics);
+
+                fragmentTransaction.replace(R.id.vp_tabs, latestGamesFragment);
+                fragmentTransaction.commit();
                 return true;
             }
 

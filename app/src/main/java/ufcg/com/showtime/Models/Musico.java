@@ -1,5 +1,6 @@
 package ufcg.com.showtime.Models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,19 +11,32 @@ public class Musico {
     private String nome;
     private List<String> participantes;
     private String banner;
+    private String estiloMusical;
+    private int fama;
     private List<String> fotos;
     private List<String> musicas;
     private List<String> videos;
 
-    public Musico (String nome, List<String> participantes) {
+    public Musico (String nome, List<String> participantes, String estiloMusical) {
         this.nome = nome;
         this.participantes = participantes;
+        this.estiloMusical = estiloMusical;
+        this.banner = "";
+        this.fama  = 0;
+        this.fotos = new ArrayList<>();
+        this.musicas = new ArrayList<>();
+        this.videos = new ArrayList<>();
     }
 
-    public Musico (String nome, List<String> participantes, String banner) {
+    public Musico (String nome, List<String> participantes, String banner, String estiloMusical) {
         this.nome = nome;
         this.participantes = participantes;
         this.banner = banner;
+        this.estiloMusical = estiloMusical;
+        this.fama  = 0;
+        this.fotos = new ArrayList<>();
+        this.musicas = new ArrayList<>();
+        this.videos = new ArrayList<>();
     }
 
     public String getNome() {
@@ -51,6 +65,26 @@ public class Musico {
 
     public void setBanner(String banner) {
         this.banner = banner;
+    }
+
+    public String getEstiloMusical() {
+        return estiloMusical;
+    }
+
+    public void setEstiloMusical(String estiloMusical) {
+        this.estiloMusical = estiloMusical;
+    }
+
+    public int getFama () {
+        return fama;
+    }
+
+    public void addFama (int fama) {
+        this.fama += fama;
+    }
+
+    public void subFama (int fama) {
+        this.fama -= fama;
     }
 
     public List<String> getFotos() {
@@ -87,5 +121,36 @@ public class Musico {
 
     public void removerVideo(String video) {
         videos.remove(video);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Musico musico = (Musico) o;
+
+        if (fama != musico.fama) return false;
+        if (!nome.equals(musico.nome)) return false;
+        if (!participantes.equals(musico.participantes)) return false;
+        if (!banner.equals(musico.banner)) return false;
+        if (!estiloMusical.equals(musico.estiloMusical)) return false;
+        if (!fotos.equals(musico.fotos)) return false;
+        if (!musicas.equals(musico.musicas)) return false;
+        return videos.equals(musico.videos);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = nome.hashCode();
+        result = 31 * result + participantes.hashCode();
+        result = 31 * result + banner.hashCode();
+        result = 31 * result + estiloMusical.hashCode();
+        result = 31 * result + fama;
+        result = 31 * result + fotos.hashCode();
+        result = 31 * result + musicas.hashCode();
+        result = 31 * result + videos.hashCode();
+        return result;
     }
 }

@@ -5,7 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import ufcg.com.showtime.BlankFragment;
+import ufcg.com.showtime.EventFragment;
+import ufcg.com.showtime.MusicFragment;
 
 /**
  * Created by franklin on 22/11/15.
@@ -25,11 +26,9 @@ public class TabsAdapter extends FragmentPagerAdapter {
         // TODO Auto-generated method stub
         switch (index) {
             case 0:
-                //TODO aba
-//                return new BlankFragment();
+                return new EventFragment();
             case 1:
-                //TODO aba
-//                return new BlankFragment();
+                return new MusicFragment();
         }
 
         return null;

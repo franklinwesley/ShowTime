@@ -13,6 +13,8 @@ public final class MySQLiteContract {
         public static final String TABLE_NAME = "Event";
 
         public static final String COLUMN_NOME = "nome";
+        public static final String COLUMN_DATA = "data";
+        public static final String COLUMN_HORA = "hora";
         public static final String COLUMN_LUGAR = "lugar";
         public static final String COLUMN_BANNER = "banner";
     }
@@ -28,12 +30,16 @@ public final class MySQLiteContract {
         public static final String COLUMN_NOME = "nome";
         public static final String COLUMN_PARTICIPANTES = "participantes";
         public static final String COLUMN_BANNER = "banner";
+        public static final String COLUMN_ESTILO = "estilo";
+        public static final String COLUMN_FAMA = "fama";
     }
 
     private static final String INTEGER_TYPE = " INTEGER";
     private static final String BLOB_TYPE = " BLOB";
     private static final String STRING_TYPE = " TEXT";
     private static final String REAL_TYPE = " REAL";
+    private static final String DATE_TYPE = " DATE";
+    private static final String TIME_TYPE = " TIME";
     private static final String COMMA_SEP = ",";
 
     /**
@@ -43,6 +49,8 @@ public final class MySQLiteContract {
             "CREATE TABLE " + Event.TABLE_NAME + " (" +
                     Event._ID + " INTEGER PRIMARY KEY" + COMMA_SEP +
                     Event.COLUMN_NOME + STRING_TYPE + COMMA_SEP +
+                    Event.COLUMN_DATA + DATE_TYPE + COMMA_SEP +
+                    Event.COLUMN_HORA + TIME_TYPE + COMMA_SEP +
                     Event.COLUMN_LUGAR + STRING_TYPE + COMMA_SEP +
                     Event.COLUMN_BANNER + STRING_TYPE + " )";
 
@@ -54,7 +62,9 @@ public final class MySQLiteContract {
                     Musician._ID + " INTEGER PRIMARY KEY" + COMMA_SEP +
                     Musician.COLUMN_NOME + STRING_TYPE + COMMA_SEP +
                     Musician.COLUMN_PARTICIPANTES + STRING_TYPE + COMMA_SEP +
-                    Musician.COLUMN_BANNER + STRING_TYPE + " )";
+                    Musician.COLUMN_BANNER + STRING_TYPE + COMMA_SEP +
+                    Musician.COLUMN_ESTILO + STRING_TYPE + COMMA_SEP +
+                    Musician.COLUMN_FAMA + INTEGER_TYPE + " )";
 
     /**
      * SQL COUNT
@@ -70,8 +80,10 @@ public final class MySQLiteContract {
             "INSERT INTO " + Musician.TABLE_NAME + " (" +
                 Musician.COLUMN_NOME + COMMA_SEP +
                 Musician.COLUMN_PARTICIPANTES + COMMA_SEP +
-                Musician.COLUMN_BANNER + ")" +
-            " VALUES (?,?,?)";
+                Musician.COLUMN_BANNER + COMMA_SEP +
+                Musician.COLUMN_ESTILO + COMMA_SEP +
+                Musician.COLUMN_FAMA + ")" +
+                " VALUES (?,?,?,?,?)";
 
     /**
      * SQL DELETE ENTRY
@@ -81,11 +93,11 @@ public final class MySQLiteContract {
                     Musician.COLUMN_NOME + " = ?";
 
     protected static final String SQL_SELECT_MUSICIAN_ENTRY =
-            "SELECT * FROM " + Musician.TABLE_NAME;
+            "SELECT * FROM " + Musician.TABLE_NAME + " ORDER BY " + Musician.COLUMN_FAMA + " DESC";
 
 
     protected static final String SQL_SELECT_EVENT =
-            "SELECT * FROM " + Event.TABLE_NAME;
+            "SELECT * FROM " + Event.TABLE_NAME+ " ORDER BY " + Event.COLUMN_DATA + " DESC, " + Event.COLUMN_HORA + " DESC";
 
     /**
      * SQL COUNT
@@ -99,9 +111,11 @@ public final class MySQLiteContract {
     protected static final String SQL_INSERT_EVENT_ENTRY =
             "INSERT INTO " + Event.TABLE_NAME + " (" +
                     Event.COLUMN_NOME + COMMA_SEP +
+                    Event.COLUMN_DATA + COMMA_SEP +
+                    Event.COLUMN_HORA + COMMA_SEP +
                     Event.COLUMN_LUGAR + COMMA_SEP +
                     Event.COLUMN_BANNER + ")" +
-                    " VALUES (?,?,?)";
+                    " VALUES (?,?,?,?,?)";
 
     /**
      * SQL DELETE ENTRY
