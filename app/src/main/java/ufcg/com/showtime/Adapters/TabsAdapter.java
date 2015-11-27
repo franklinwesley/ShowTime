@@ -38,7 +38,7 @@ public class TabsAdapter extends FragmentPagerAdapter {
             case 0:
                 return EventFragment.newInstance(events);
             case 1:
-                return new MusicFragment();
+                return MusicFragment.newInstance(musicos);
         }
         return null;
     }
