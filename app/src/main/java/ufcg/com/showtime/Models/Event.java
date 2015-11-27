@@ -1,12 +1,15 @@
 package ufcg.com.showtime.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by franklin on 21/11/15.
  */
-public class Event {
+public class Event implements Parcelable{
 
     private String nome;
     private String data;
@@ -32,6 +35,26 @@ public class Event {
         this.banner = banner;
         this.musicos = new ArrayList<>();
     }
+
+    protected Event(Parcel in) {
+        nome = in.readString();
+        data = in.readString();
+        hora = in.readString();
+        lugar = in.readString();
+        banner = in.readString();
+    }
+
+    public static final Creator<Event> CREATOR = new Creator<Event>() {
+        @Override
+        public Event createFromParcel(Parcel in) {
+            return new Event(in);
+        }
+
+        @Override
+        public Event[] newArray(int size) {
+            return new Event[size];
+        }
+    };
 
     public String getNome() {
         return nome;
@@ -106,5 +129,19 @@ public class Event {
         result = 31 * result + musicos.hashCode();
         result = 31 * result + banner.hashCode();
         return result;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(nome);
+        dest.writeString(data);
+        dest.writeString(hora);
+        dest.writeString(lugar);
+        dest.writeString(banner);
     }
 }

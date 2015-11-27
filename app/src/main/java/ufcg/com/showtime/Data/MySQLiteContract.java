@@ -93,8 +93,11 @@ public final class MySQLiteContract {
                     Musician.COLUMN_NOME + " = ?";
 
     protected static final String SQL_SELECT_MUSICIAN_ENTRY =
-            "SELECT * FROM " + Musician.TABLE_NAME + " ORDER BY " + Musician.COLUMN_FAMA + " DESC";
+            "SELECT * FROM " + Musician.TABLE_NAME + " WHERE " +
+                    Musician.COLUMN_NOME + " LIKE ?";
 
+    protected static final String SQL_SELECT_MUSICIAN =
+            "SELECT * FROM " + Musician.TABLE_NAME + " ORDER BY " + Musician.COLUMN_FAMA + " DESC";
 
     protected static final String SQL_SELECT_EVENT =
             "SELECT * FROM " + Event.TABLE_NAME+ " ORDER BY " + Event.COLUMN_DATA + " DESC, " + Event.COLUMN_HORA + " DESC";
@@ -120,6 +123,10 @@ public final class MySQLiteContract {
     /**
      * SQL DELETE ENTRY
      */
+    protected static final String SQL_SELECT_EVENT_ENTRY =
+            "SELECT * FROM " + Event.TABLE_NAME + " WHERE " +
+                    Event.COLUMN_NOME + " LIKE ?";
+
     protected static final String SQL_DELETE_EVENT_ENTRY =
             "DELETE FROM " + Event.TABLE_NAME + " WHERE " +
                     Event.COLUMN_NOME + " = ?";

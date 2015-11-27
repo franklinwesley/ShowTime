@@ -1,12 +1,15 @@
 package ufcg.com.showtime.Models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by franklin on 21/11/15.
  */
-public class Musico {
+public class Musico implements Parcelable{
 
     private String nome;
     private List<String> participantes;
@@ -38,6 +41,29 @@ public class Musico {
         this.musicas = new ArrayList<>();
         this.videos = new ArrayList<>();
     }
+
+    protected Musico(Parcel in) {
+        nome = in.readString();
+        participantes = in.createStringArrayList();
+        banner = in.readString();
+        estiloMusical = in.readString();
+        fama = in.readInt();
+        fotos = in.createStringArrayList();
+        musicas = in.createStringArrayList();
+        videos = in.createStringArrayList();
+    }
+
+    public static final Creator<Musico> CREATOR = new Creator<Musico>() {
+        @Override
+        public Musico createFromParcel(Parcel in) {
+            return new Musico(in);
+        }
+
+        @Override
+        public Musico[] newArray(int size) {
+            return new Musico[size];
+        }
+    };
 
     public String getNome() {
         return nome;
@@ -152,5 +178,22 @@ public class Musico {
         result = 31 * result + musicas.hashCode();
         result = 31 * result + videos.hashCode();
         return result;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(nome);
+        dest.writeStringList(participantes);
+        dest.writeString(banner);
+        dest.writeString(estiloMusical);
+        dest.writeInt(fama);
+        dest.writeStringList(fotos);
+        dest.writeStringList(musicas);
+        dest.writeStringList(videos);
     }
 }

@@ -62,6 +62,7 @@ public class MusicFragment extends Fragment implements RecycleViewOnCLickListene
         p5.add("Alessandro Venturella");
         bd.inserirMusico("Slipknot", p5, "https://sidemad.files.wordpress.com/2012/06/banner-slipknot.jpg", "Rock Roll", 7);
         final List<Musico> musics = bd.recuperarMusicos();
+        bd.close();
 
         recyclerView = (RecyclerView) v.findViewById(R.id.events);
         recyclerView.setHasFixedSize(true);
@@ -94,5 +95,10 @@ public class MusicFragment extends Fragment implements RecycleViewOnCLickListene
     @Override
     public void onClickListener(View v, int position) {
         //ação ao clickar
+    }
+
+    public void update(ArrayList<Musico> musicos) {
+//        this.musicos = musicos;
+//        adapter.notifyDataSetChanged();
     }
 }
