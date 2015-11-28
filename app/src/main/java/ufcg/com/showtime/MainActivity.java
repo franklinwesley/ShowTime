@@ -1,7 +1,5 @@
 package ufcg.com.showtime;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.speech.RecognizerIntent;
 import android.support.v4.view.ViewPager;
@@ -9,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,7 +23,7 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import java.util.ArrayList;
 import java.util.List;
 
-import ufcg.com.showtime.Adapters.TabsAdapter;
+import ufcg.com.showtime.Adapters.TabsMainAdapter;
 import ufcg.com.showtime.Data.MySQLiteOpenHelper;
 import ufcg.com.showtime.Extras.SlidingTabLayout;
 import ufcg.com.showtime.Models.Event;
@@ -38,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private MaterialSearchView searchView;
     private SlidingTabLayout slidingTabLayout;
     private ViewPager viewPager;
-    private TabsAdapter adapter;
+    private TabsMainAdapter adapter;
     private boolean search = false;
 
     @Override
@@ -149,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Musico> musicos = bd.recuperarMusicos();
         bd.close();
         viewPager = (ViewPager) findViewById(R.id.vp_tabs);
-        adapter = new TabsAdapter(getSupportFragmentManager(), this, events, musicos);
+        adapter = new TabsMainAdapter(getSupportFragmentManager(), this, events, musicos);
         viewPager.setAdapter(adapter);
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.tabs);
         slidingTabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));

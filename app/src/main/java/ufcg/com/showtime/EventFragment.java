@@ -2,32 +2,28 @@ package ufcg.com.showtime;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import ufcg.com.showtime.Adapters.EventAdapter;
-import ufcg.com.showtime.Data.MySQLiteOpenHelper;
-import ufcg.com.showtime.Interfaces.RecycleViewOnCLickListenerHack;
 import ufcg.com.showtime.Models.Event;
-import ufcg.com.showtime.Models.Musico;
 
 
-public class EventFragment extends Fragment implements RecycleViewOnCLickListenerHack {
+public class EventFragment extends Fragment {
 
-    private RecyclerView recyclerView;
-    private List<Event> events;
-    private EventAdapter adapter;
+    private Event event;
 
-    public static EventFragment newInstance(ArrayList<Event> events) {
+    public static EventFragment newInstance(Event event) {
         EventFragment fragmentDemo = new EventFragment();
         Bundle args = new Bundle();
-        args.putParcelableArrayList("events", events);
+        args.putParcelable("event", event);
         fragmentDemo.setArguments(args);
         return fragmentDemo;
     }
@@ -35,7 +31,7 @@ public class EventFragment extends Fragment implements RecycleViewOnCLickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        events = getArguments().getParcelableArrayList("events");
+        event = getArguments().getParcelable("event");
     }
 
     @Override
@@ -43,27 +39,18 @@ public class EventFragment extends Fragment implements RecycleViewOnCLickListene
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_event, container, false);
 
-        recyclerView = (RecyclerView) v.findViewById(R.id.events);
-        recyclerView.setHasFixedSize(true);
+        ImageView banner = (ImageView) v.findViewById(R.id.event_banner);
+        TextView nome = (TextView) v.findViewById(R.id.event_nome);
+        TextView lugar = (TextView) v.findViewById(R.id.event_lugar);
+        TextView data_hora = (TextView) v.findViewById(R.id.event_data_hora);
 
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(llm);
-
-        adapter = new EventAdapter(getActivity(), events);
-        adapter.setRecycleViewOnCLickListenerHack(this);
-        recyclerView.setAdapter(adapter);
+        Glide.with(banner.getContext()).load(event.getBanner()).into(banner);
+//        nome.setText(event.getNome());
+//        lugar.setText("Local: " + event.getLugar());
+//        String[] data = event.getData().split("-");
+//        String date = data[0] + "/" + data[1] + "/" + data[2];
+//        data_hora.setText("Data: " + date + " - " + event.getHora());
 
         return v;
-    }
-
-    @Override
-    public void onClickListener(View v, int position) {
-        //ação ao clickar
-    }
-
-    public void update(ArrayList<Event> events) {
-        this.events = events;
-        adapter.notifyDataSetChanged();
     }
 }

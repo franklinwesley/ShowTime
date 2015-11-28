@@ -18,7 +18,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
 
-    private static final String DATABASE_NAME = "SHOWTME.db";
+    private static final String DATABASE_NAME = "ST.db";
 
     private SQLiteDatabase mSQLiteDB;
 
@@ -30,7 +30,9 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(MySQLiteContract.SQL_CREATE_TABLE_EVENT);
+        sqLiteDatabase.execSQL(MySQLiteContract.SQL_CREATE_TABLE_SHOW);
         sqLiteDatabase.execSQL(MySQLiteContract.SQL_CREATE_TABLE_MUSICIAN);
+        Log.d("BD","aki");
     }
 
     @Override
@@ -99,6 +101,31 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     public ArrayList<Event> recuperarEventos() {
         ArrayList<Event> eventos = new ArrayList<Event>();
         Cursor cursor = this.mSQLiteDB.rawQuery(MySQLiteContract.SQL_SELECT_EVENT, null);
+        if(cursor.moveToFirst()) {
+            do {
+                int nomeColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_NOME);
+                int dataColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_DATA);
+                int horaColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_HORA);
+                int lugarColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_LUGAR);
+                int bannerColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_BANNER);
+
+                String nome = cursor.getString(nomeColumnIndex);
+                String data = cursor.getString(dataColumnIndex);
+                String hora = cursor.getString(horaColumnIndex);
+                String lugar = cursor.getString(lugarColumnIndex);
+                String banner = cursor.getString(bannerColumnIndex);
+
+                eventos.add(new Event(nome, data, hora, lugar, banner));
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return eventos;
+    }
+
+    public ArrayList<Event> recuperarEventos(String musico) {
+        ArrayList<Event> eventos = new ArrayList<Event>();
+        Cursor cursor = this.mSQLiteDB.rawQuery(MySQLiteContract.SQL_SELECT_SHOW_EVENT, new String[]{musico});
         if(cursor.moveToFirst()) {
             do {
                 int nomeColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_NOME);
@@ -207,6 +234,33 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 Musico m = new Musico(nome, Arrays.asList(participantes.split(",")), banner, estiloMusical);
                 m.addFama(fama);
                 musicos.add(m);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return musicos;
+    }
+
+    public ArrayList<Musico> recuperarMusicos(String event) {
+        ArrayList<Musico> musicos = new ArrayList<Musico>();
+        Cursor cursor = this.mSQLiteDB.rawQuery(MySQLiteContract.SQL_SELECT_SHOW_MUSICIAN, new String[]{event});
+        if(cursor.moveToFirst()) {
+            do {
+                int nomeColumnIndex = cursor.getColumnIndex(MySQLiteContract.Musician.COLUMN_NOME);
+                int participantesColumnIndex = cursor.getColumnIndex(MySQLiteContract.Musician.COLUMN_PARTICIPANTES);
+                int bannerColumnIndex = cursor.getColumnIndex(MySQLiteContract.Musician.COLUMN_BANNER);
+                int estiloColumnIndex = cursor.getColumnIndex(MySQLiteContract.Musician.COLUMN_ESTILO);
+                int famaColumnIndex = cursor.getColumnIndex(MySQLiteContract.Musician.COLUMN_FAMA);
+
+                String nome = cursor.getString(nomeColumnIndex);
+                String participantes = cursor.getString(participantesColumnIndex);
+                String banner = cursor.getString(bannerColumnIndex);
+                String estiloMusical = cursor.getString(estiloColumnIndex);
+                int fama = cursor.getInt(famaColumnIndex);
+
+                Musico m = new Musico(nome, Arrays.asList(participantes.split(",")), banner, estiloMusical);
+                m.addFama(fama);
+                musicos.add(m);
+
             } while (cursor.moveToNext());
         }
         cursor.close();

@@ -9,23 +9,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import ufcg.com.showtime.Adapters.EventAdapter;
 import ufcg.com.showtime.Adapters.MusicAdapter;
-import ufcg.com.showtime.Data.MySQLiteOpenHelper;
 import ufcg.com.showtime.Interfaces.RecycleViewOnCLickListenerHack;
 import ufcg.com.showtime.Models.Musico;
 
 
-public class MusicFragment extends Fragment implements RecycleViewOnCLickListenerHack {
+public class MusicListFragment extends Fragment implements RecycleViewOnCLickListenerHack {
 
     private RecyclerView recyclerView;
     private ArrayList<Musico> musicos;
     private MusicAdapter adapter;
 
-    public static MusicFragment newInstance(ArrayList<Musico> musicos) {
-        MusicFragment fragmentDemo = new MusicFragment();
+    public static MusicListFragment newInstance(ArrayList<Musico> musicos) {
+        MusicListFragment fragmentDemo = new MusicListFragment();
         Bundle args = new Bundle();
         args.putParcelableArrayList("musicos", musicos);
         fragmentDemo.setArguments(args);
@@ -41,7 +38,7 @@ public class MusicFragment extends Fragment implements RecycleViewOnCLickListene
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_event, container, false);
+        View v = inflater.inflate(R.layout.fragment_list, container, false);
 
         recyclerView = (RecyclerView) v.findViewById(R.id.events);
         recyclerView.setHasFixedSize(true);

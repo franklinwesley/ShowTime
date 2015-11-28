@@ -6,7 +6,7 @@ public final class MySQLiteContract {
 
     /**
      * Table 'Event' structure definition.
-     * @author Marcos Pereira
+     * @author Franklin Wesley
      *
      */
     public static abstract class Event implements BaseColumns {
@@ -21,7 +21,7 @@ public final class MySQLiteContract {
 
     /**
      * Table 'Musician' structure definition.
-     * @author Marcos Pereira
+     * @author Franklin Wesley
      *
      */
     public static abstract class Musician implements BaseColumns {
@@ -32,6 +32,18 @@ public final class MySQLiteContract {
         public static final String COLUMN_BANNER = "banner";
         public static final String COLUMN_ESTILO = "estilo";
         public static final String COLUMN_FAMA = "fama";
+    }
+
+    /**
+     * Table 'Show' structure definition.
+     * @author Franklin Wesley
+     *
+     */
+    public static abstract class Show implements BaseColumns {
+        public static final String TABLE_NAME = "Show";
+
+        public static final String COLUMN_EVENT = "event";
+        public static final String COLUMN_MUSICO = "musico";
     }
 
     private static final String INTEGER_TYPE = " INTEGER";
@@ -65,6 +77,15 @@ public final class MySQLiteContract {
                     Musician.COLUMN_BANNER + STRING_TYPE + COMMA_SEP +
                     Musician.COLUMN_ESTILO + STRING_TYPE + COMMA_SEP +
                     Musician.COLUMN_FAMA + INTEGER_TYPE + " )";
+
+    /**
+     * CREATE TABLE Show SQL.
+     */
+    protected static final String SQL_CREATE_TABLE_SHOW =
+            "CREATE TABLE " + Show.TABLE_NAME + " (" +
+                    Show._ID + " INTEGER PRIMARY KEY" + COMMA_SEP +
+                    Show.COLUMN_EVENT + STRING_TYPE + COMMA_SEP +
+                    Show.COLUMN_MUSICO + STRING_TYPE + " )";
 
     /**
      * SQL COUNT
@@ -130,4 +151,35 @@ public final class MySQLiteContract {
     protected static final String SQL_DELETE_EVENT_ENTRY =
             "DELETE FROM " + Event.TABLE_NAME + " WHERE " +
                     Event.COLUMN_NOME + " = ?";
+
+    //Show
+    protected static final String SQL_SELECT_SHOW_EVENT =
+            "SELECT * FROM " + Show.TABLE_NAME + " WHERE " +
+                    Show.COLUMN_MUSICO + " = ?";
+
+    protected static final String SQL_SELECT_SHOW_MUSICIAN =
+            "SELECT * FROM " + Show.TABLE_NAME + " WHERE " +
+                    Show.COLUMN_EVENT + " = ?";
+
+    /**
+     * SQL COUNT
+     */
+    protected static final String SQL_COUNT_SHOW_ENTRIES =
+            "SELECT count(*) FROM " + Show.TABLE_NAME;
+
+    /**
+     * SQL INSERT ENTRY
+     */
+    protected static final String SQL_INSERT_SHOW_ENTRY =
+            "INSERT INTO " + Show.TABLE_NAME + " (" +
+                    Show.COLUMN_EVENT + COMMA_SEP +
+                    Show.COLUMN_MUSICO + ")" +
+                    " VALUES (?,?)";
+
+    /**
+     * SQL DELETE ENTRY
+     */
+    protected static final String SQL_DELETE_SHOW_ENTRY =
+            "DELETE FROM " + Show.TABLE_NAME + " WHERE " +
+                    Show.COLUMN_EVENT + " = ?";
 }
