@@ -128,20 +128,14 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         Cursor cursor = this.mSQLiteDB.rawQuery(MySQLiteContract.SQL_SELECT_SHOW_EVENT, new String[]{musico});
         if(cursor.moveToFirst()) {
             do {
-                int nomeColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_NOME);
-                int dataColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_DATA);
-                int horaColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_HORA);
-                int lugarColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_LUGAR);
-                int bannerColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_BANNER);
+                int eventColumnIndex = cursor.getColumnIndex(MySQLiteContract.Show.COLUMN_EVENT);
 
-                String nome = cursor.getString(nomeColumnIndex);
-                String data = cursor.getString(dataColumnIndex);
-                String hora = cursor.getString(horaColumnIndex);
-                String lugar = cursor.getString(lugarColumnIndex);
-                String banner = cursor.getString(bannerColumnIndex);
+                String event = cursor.getString(eventColumnIndex);
 
-                eventos.add(new Event(nome, data, hora, lugar, banner));
-
+                Event e = getEvent(event);
+                if (e != null) {
+                    eventos.add(e);
+                }
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -191,7 +185,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
     public ArrayList<Event> searchEvent(String query) {
         ArrayList<Event> events = new ArrayList<>();
 
-        Cursor cursor = this.mSQLiteDB.rawQuery(MySQLiteContract.SQL_SELECT_EVENT_ENTRY, new String[]{"%" + query + "%"});
+        Cursor cursor = this.mSQLiteDB.rawQuery(MySQLiteContract.SQL_SELECT_EVENT_ENTRY_LIKE, new String[]{"%" + query + "%"});
         if(cursor.moveToFirst()) {
             do {
                 int nomeColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_NOME);
@@ -213,10 +207,35 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         return events;
     }
 
+    public Event getEvent(String event) {
+        Event e = null;
+
+        Cursor cursor = this.mSQLiteDB.rawQuery(MySQLiteContract.SQL_SELECT_EVENT_ENTRY, new String[]{event});
+        if(cursor.moveToFirst()) {
+            do {
+                int nomeColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_NOME);
+                int dataColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_DATA);
+                int horaColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_HORA);
+                int lugarColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_LUGAR);
+                int bannerColumnIndex = cursor.getColumnIndex(MySQLiteContract.Event.COLUMN_BANNER);
+
+                String nome = cursor.getString(nomeColumnIndex);
+                String data = cursor.getString(dataColumnIndex);
+                String hora = cursor.getString(horaColumnIndex);
+                String lugar = cursor.getString(lugarColumnIndex);
+                String banner = cursor.getString(bannerColumnIndex);
+
+                e = new Event(nome, data, hora, lugar, banner);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return e;
+    }
+
     public ArrayList<Musico> searchMusic(String query) {
         ArrayList<Musico> musicos = new ArrayList<>();
 
-        Cursor cursor = this.mSQLiteDB.rawQuery(MySQLiteContract.SQL_SELECT_MUSICIAN_ENTRY, new String[]{"%" + query + "%"});
+        Cursor cursor = this.mSQLiteDB.rawQuery(MySQLiteContract.SQL_SELECT_MUSICIAN_ENTRY_LIKE, new String[]{"%" + query + "%"});
         if(cursor.moveToFirst()) {
             do {
                 int nomeColumnIndex = cursor.getColumnIndex(MySQLiteContract.Musician.COLUMN_NOME);
@@ -245,6 +264,26 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         Cursor cursor = this.mSQLiteDB.rawQuery(MySQLiteContract.SQL_SELECT_SHOW_MUSICIAN, new String[]{event});
         if(cursor.moveToFirst()) {
             do {
+                int musicoColumnIndex = cursor.getColumnIndex(MySQLiteContract.Show.COLUMN_MUSICO);
+
+                String musico = cursor.getString(musicoColumnIndex);
+
+                Musico m = getMusico(musico);
+                if (m != null) {
+                    musicos.add(m);
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return musicos;
+    }
+
+    private Musico getMusico(String musico) {
+        Musico m = null;
+
+        Cursor cursor = this.mSQLiteDB.rawQuery(MySQLiteContract.SQL_SELECT_MUSICIAN_ENTRY, new String[]{musico});
+        if(cursor.moveToFirst()) {
+            do {
                 int nomeColumnIndex = cursor.getColumnIndex(MySQLiteContract.Musician.COLUMN_NOME);
                 int participantesColumnIndex = cursor.getColumnIndex(MySQLiteContract.Musician.COLUMN_PARTICIPANTES);
                 int bannerColumnIndex = cursor.getColumnIndex(MySQLiteContract.Musician.COLUMN_BANNER);
@@ -257,13 +296,21 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 String estiloMusical = cursor.getString(estiloColumnIndex);
                 int fama = cursor.getInt(famaColumnIndex);
 
-                Musico m = new Musico(nome, Arrays.asList(participantes.split(",")), banner, estiloMusical);
+                m = new Musico(nome, Arrays.asList(participantes.split(",")), banner, estiloMusical);
                 m.addFama(fama);
-                musicos.add(m);
-
             } while (cursor.moveToNext());
         }
         cursor.close();
-        return musicos;
+        return m;
+    }
+
+    public boolean inserirShow(String event, String musico) {
+        if (recuperarMusicos(event).isEmpty()) {
+            this.getWritableDatabase().execSQL(
+                    MySQLiteContract.SQL_INSERT_SHOW_ENTRY,
+                    new Object[]{event,musico});
+            return true;
+        }
+        return false;
     }
 }

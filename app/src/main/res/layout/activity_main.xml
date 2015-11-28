@@ -26,14 +26,14 @@
     <ufcg.com.showtime.Extras.SlidingTabLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/tabs">
+        android:id="@+id/tabs_main">
     </ufcg.com.showtime.Extras.SlidingTabLayout>
 
     <android.support.v4.view.ViewPager
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:id="@+id/vp_tabs">
+        android:id="@+id/vp_tabs_main">
     </android.support.v4.view.ViewPager>
 
 

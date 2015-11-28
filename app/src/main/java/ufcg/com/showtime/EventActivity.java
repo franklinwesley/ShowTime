@@ -26,8 +26,8 @@ public class EventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event);
 
-//        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
 
 //        Event event = getIntent().getExtras().getParcelable("event");
@@ -35,10 +35,10 @@ public class EventActivity extends AppCompatActivity {
         MySQLiteOpenHelper bd = new MySQLiteOpenHelper(this);
         ArrayList<Musico> musicos = bd.recuperarMusicos(event.getNome());
         bd.close();
-        viewPager = (ViewPager) findViewById(R.id.vp_tabs);
+        viewPager = (ViewPager) findViewById(R.id.vp_tabs_event);
         adapter = new TabsEventAdapter(getSupportFragmentManager(), this, event, musicos);
         viewPager.setAdapter(adapter);
-        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.tabs);
+        slidingTabLayout = (SlidingTabLayout) findViewById(R.id.tabs_event);
         slidingTabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         slidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.colorAccent));
         slidingTabLayout.setViewPager(viewPager);
