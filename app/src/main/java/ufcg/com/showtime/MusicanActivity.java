@@ -2,7 +2,10 @@ package ufcg.com.showtime;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import ufcg.com.showtime.Models.Musico;
 
@@ -15,10 +18,14 @@ public class MusicanActivity extends AppCompatActivity {
 
         TextView musican = (TextView) findViewById(R.id.tv_musican);
         TextView genre = (TextView) findViewById(R.id.tv_genre);
+        ImageView banner = (ImageView) findViewById(R.id.img_banner);
 
         Musico musico = (Musico) getIntent().getExtras().get("musican");
 
         musican.setText(musico.getNome());
         genre.setText(musico.getEstiloMusical());
+
+        Glide.with(banner.getContext()).load(musico.getBanner()).into(banner);
+
     }
 }
