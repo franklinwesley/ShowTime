@@ -1,5 +1,6 @@
 package ufcg.com.showtime;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -57,6 +58,9 @@ public class MusicListFragment extends Fragment implements RecycleViewOnCLickLis
     @Override
     public void onClickListener(View v, int position) {
         //ação ao clickar
+        Intent musicanProfile = new Intent(getContext(), MusicanActivity.class);
+        musicanProfile.putExtra("musican", musicos.get(position));
+        startActivity(musicanProfile);
     }
 
     public void update(ArrayList<Musico> musicos) {
