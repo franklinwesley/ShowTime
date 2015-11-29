@@ -30,8 +30,7 @@ public class EventActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-//        Event event = getIntent().getExtras().getParcelable("event");
-        Event event = new Event("SHOW DO ANGRA EM CAMPINA GRANDE", "04-12-2015", "21:00", "Ventura Recepções (Aula Extra Music)", "http://scontent.xx.fbcdn.net/hphotos-xaf1/v/t1.0-0/c170.0.200.200/p200x200/1796506_852376334881263_8282178809894950046_n.jpg?oh=3ec85cba29d882c482472d21af56315a&oe=56891072");
+        Event event = getIntent().getExtras().getParcelable("event");
         MySQLiteOpenHelper bd = new MySQLiteOpenHelper(this);
         ArrayList<Musico> musicos = bd.recuperarMusicos(event.getNome());
         bd.close();
