@@ -124,6 +124,15 @@ public class MainActivity extends AppCompatActivity {
         p5.add("Alessandro Venturella");
         bd.inserirMusico("Slipknot", p5, "https://sidemad.files.wordpress.com/2012/06/banner-slipknot.jpg", "Rock Roll", 7);
         bd.inserirShow("SHOW DO ANGRA EM CAMPINA GRANDE", "Metallica");
+        bd.inserirShow("SHOW DO ANGRA EM CAMPINA GRANDE", "Scorpions");
+        bd.inserirShow("Forró das Antigas", "Saulo Fernandes");
+        bd.inserirShow("Forró das Antigas", "Slipknot");
+        bd.inserirShow("Mato Seco em Campina Grande", "Luan Santana");
+        bd.inserirShow("Mato Seco em Campina Grande", "Saulo Fernandes");
+        bd.inserirShow("Banda Vibrações em Campina Grande", "Luan Santana");
+        bd.inserirShow("Banda Vibrações em Campina Grande", "Slipknot");
+        bd.inserirShow("O Rappa", "Metallica");
+        bd.inserirShow("O Rappa", "Scorpions");
         bd.close();
     }
 
@@ -154,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.tabs_main);
         slidingTabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         slidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.colorAccent));
+        slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
         super.onStart();
     }

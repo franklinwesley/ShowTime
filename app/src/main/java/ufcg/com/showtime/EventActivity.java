@@ -40,6 +40,7 @@ public class EventActivity extends AppCompatActivity {
         slidingTabLayout = (SlidingTabLayout) findViewById(R.id.tabs_event);
         slidingTabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         slidingTabLayout.setSelectedIndicatorColors(getResources().getColor(R.color.colorAccent));
+        slidingTabLayout.setDistributeEvenly(true);
         slidingTabLayout.setViewPager(viewPager);
     }
 }

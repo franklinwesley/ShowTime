@@ -6,6 +6,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <LinearLayout
+            android:paddingTop="16dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -16,6 +17,7 @@
                 android:id="@+id/event_banner"/>
 
             <TextView
+                android:paddingTop="5dp"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="NOME"
