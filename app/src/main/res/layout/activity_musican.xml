@@ -40,4 +40,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:onClick="videosOnClick"
+        android:layout_marginTop="50dp"
+        android:text="Vídeos"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:onClick="contatoOnClick"
+        android:text="Contato"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content" />
+
 </LinearLayout>
